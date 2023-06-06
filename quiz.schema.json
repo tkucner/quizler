@@ -1,0 +1,57 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/product.schema.json",
+    "title": "Quiz configuration",
+    "description": "A schema for configuration of quizler files. For details check: https://github.com/tkucner/quizler",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Title of your quiz. Good idea is to include date."
+        },
+        "question_grouping": {
+            "type": "boolean",
+            "description": "The questions grouped in exclusive sets",
+            "default": false
+        },
+        "students_list": {
+            "type": "string",
+            "description": "File with students."
+        },
+        "questions_list": {
+            "type": "string",
+            "description": "File with questions."
+        },
+        "group_count":{
+            "type":"integer",
+            "description":"Number of groups in the quiz."
+        }
+        ,
+        "group_computation": {
+            "type": "array",
+            "items": {
+                "type": "array",
+                "prefixItems": [
+                    {
+                        "enum": [
+                            "add",
+                            "substract",
+                            "multiply",
+                            "sum",
+                            "take"
+                        ]
+                    },
+                    {
+                        "type": "integer"
+                    }
+                ]
+            }
+        }
+    },
+    "required": [
+        "students_list",
+        "questions_list",
+        "group_computation",
+        "group_count"
+    ]
+}
