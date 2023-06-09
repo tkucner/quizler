@@ -166,3 +166,6 @@ cython_debug/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# Test files
+quiz_no_grouping/*
