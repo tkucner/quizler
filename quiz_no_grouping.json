@@ -9,5 +9,7 @@
         ["multiply", 3],
         ["sum",0],
         ["add",4]
-    ]
+    ],
+    "questions_count":7,
+    "two_column":true
 }

@@ -22,6 +22,10 @@
             "type": "string",
             "description": "File with questions."
         },
+        "questions_count":{
+            "type":"integer",
+            "description":"Number of questions in the quiz."
+        },
         "group_count":{
             "type":"integer",
             "description":"Number of groups in the quiz."
@@ -46,12 +50,25 @@
                     }
                 ]
             }
+        },
+        "two_column":{
+            "type": "boolean",
+            "description": "If the number of groups is even then it in each slide this same question is assigned to tow different groups",
+            "default":true
+        },
+        "repeat_questions":{
+            "type": "boolean",
+            "description": "Allow the questions to repat on multiple slides. DOES NOT REPEAT QUESTION IN A GROUP!",
+            "default":false
         }
+        
     },
     "required": [
         "students_list",
         "questions_list",
         "group_computation",
-        "group_count"
+        "group_count",
+        "questions_count"
+
     ]
 }
