@@ -3,6 +3,34 @@ import sys
 import jsonschema
 import json
 import csv
+import random
+
+def print_dict(dictionary, indent=0):
+    for key, value in dictionary.items():
+        print("+++++++++++++++GROUP {}+++++++++++++++".format(key))
+        for question in value:
+            print(question)
+
+def save_dict_to_file(dictionary, filename):
+    with open(filename, 'w') as file:
+        for key, value in dictionary.items():
+            file.write("+++++++++++++++GROUP {}+++++++++++++++\n".format(key))
+            for question in value:
+                file.write("{}\n".format(question))
+
+def print_list_of_lists(list_of_lists):
+    for i, inner_list in enumerate(list_of_lists):
+        print("++++++++++++++++SLIDE {}++++++++++++++++".format(i))
+        for inner_item in inner_list:
+            print(inner_item)
+        
+def save_list_of_lists_to_file(list_of_lists, filename):
+    with open(filename, 'w') as file:
+        for i, inner_list in enumerate(list_of_lists):
+            file.write("++++++++++++++++SLIDE {}++++++++++++++++\n".format(i))
+            for inner_item in inner_list:
+                file.write("{}\n".format(inner_item))
+
 
 def create_directory(directory_path):
     if not os.path.exists(directory_path):
@@ -19,6 +47,51 @@ def save_array_as_csv(array, file_path):
         writer = csv.writer(csv_file)
         writer.writerows(array)
 
+def generate_quiz(json_data):
+    group_ids=list("0123456789ABCDEF"[:json_data["group_count"]])
+    
+    questions_input=[]
+    questions_slides=[]
+    groups_questions=my_dict = {item: [] for item in group_ids}
+    
+    csv_file= open(json_data['questions_list'], 'r',encoding='utf-8-sig')
+    csv_reader = csv.reader(csv_file,delimiter=";")
+
+    # Read the contents of the CSV file into a list
+    for row in csv_reader:
+        questions_input.append(row)
+    random.shuffle(questions_input)
+
+    # check if there are groups of questiosn or not
+    if len(questions_input[0])==3:
+        pass
+    elif len(questions_input[0])==2:
+        if(json_data["two_column"] and json_data["group_count"]%2==0):
+            question_i=0
+            for no in range(json_data["questions_count"]):
+                local_questions_slides=[]
+                local_group_ids=random.sample(group_ids,len(group_ids))
+                for group_id in range(1,len(group_ids),2):
+                    while ((not groups_questions[local_group_ids[group_id]] == []) and (questions_input[question_i] in groups_questions[local_group_ids[group_id]])) or ((not groups_questions[local_group_ids[group_id-1]] == []) and (questions_input[question_i] in groups_questions[local_group_ids[group_id-1]])):
+                        item_to_move = questions_input.pop(questions_input[question_i])  
+                        questions_input.append(item_to_move)
+                    groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
+                    groups_questions[local_group_ids[group_id-1]].append(questions_input[question_i])
+                    local_questions_slides.append((local_group_ids[group_id],local_group_ids[group_id-1],questions_input[question_i]))
+                    question_i=question_i+1
+                questions_slides.append(local_questions_slides)
+            print_list_of_lists(questions_slides)
+            print_dict(groups_questions)
+        else:
+            pass
+            
+    else:
+        print("Somethign is wrong, too many columns")
+
+    
+
+    return groups_questions, questions_slides
+    
 
 
 def remove_letters(input_string):
@@ -124,4 +197,17 @@ file_name = "student_groups.csv"
 file_path = os.path.join(json_data["name"], file_name)
 
 save_array_as_csv(students, file_path)
+
+groups_questions, questions_slides=generate_quiz(json_data)
+
+file_name = "questions_in_groups.txt"
+file_path = os.path.join(json_data["name"], file_name)
+save_dict_to_file(groups_questions, file_path)
+
+file_name = "questions_in_slides_raw.txt"
+file_path = os.path.join(json_data["name"], file_name)
+save_list_of_lists_to_file(questions_slides, file_path)
+
+
+
 
