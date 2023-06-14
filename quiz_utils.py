@@ -2,6 +2,19 @@ import random
 import csv
 
 def generate_quiz(json_data):
+    """
+    Generate a quiz based on the provided JSON data.
+
+    Args:
+        json_data (dict): The JSON data containing configuration settings.
+
+    Returns:
+        tuple: A tuple containing a dictionary of groups and their assigned questions,
+               and a list of tuples representing question slides.
+
+    Raises:
+        IndexError: If the number of columns in the questions input is incorrect.
+    """
     group_ids = list("0123456789ABCDEF"[:json_data["group_count"]])
     
     questions_input = []
@@ -38,10 +51,21 @@ def generate_quiz(json_data):
             pass
             
     else:
-        print("Something is wrong, too many columns")
+        raise IndexError("Something is wrong, too many columns")
     return groups_questions, questions_slides
 
 def answer_per_student(group_questions, students):
+    """
+    Add answers to each student based on their assigned group's questions.
+
+    Args:
+        group_questions (dict): A dictionary containing groups and their assigned questions.
+        students (list): A list of student data.
+
+    Returns:
+        list: A list of students with answers appended.
+
+    """
     for i in range(len(students)):
         group = students[i][3]
         questions_with_answers = group_questions[group]
@@ -50,34 +74,123 @@ def answer_per_student(group_questions, students):
     return students
 
 def remove_letters(input_string):
+    """
+    Remove letters from a string.
+
+    Args:
+        input_string (str): The input string.
+
+    Returns:
+        str: The input string with letters removed.
+
+    """
     input_string = str(input_string)
     return ''.join(c for c in input_string if not c.isalpha())
 
 def fun_add(factor, number):
+    """
+    Add a factor to a number.
+
+    Args:
+        factor (int): The factor to add.
+        number (int): The number to which the factor is added.
+
+    Returns:
+        int: The result of adding the factor to the number.
+
+    """
     return number + factor
 
 def fun_subtract(factor, number):
+    """
+    Subtract a factor from a number.
+
+    Args:
+        factor (int): The factor to subtract.
+        number (int): The number from which the factor is subtracted.
+
+    Returns:
+        int: The result of subtracting the factor from the number.
+
+    """
     return number - factor
 
 def fun_multiply(factor, number):
+    """
+    Multiply a number by a factor.
+
+    Args:
+        factor (int): The factor to multiply.
+        number (int): The number to be multiplied.
+
+    Returns:
+        int: The result of multiplying the number by the factor.
+
+    """
     return number * factor
 
 def fun_sum(_, number):
+    """
+    Calculate the sum of the digits in a number.
+
+    Args:
+        _ (int): Ignored.
+        number (int): The number to calculate the sum of digits.
+
+    Returns:
+        int: The sum of the digits in the number.
+
+    """
     total = 0
     for digit in str(number):
         total += int(digit)
     return total
 
 def number_to_group(number, group_count):
+    """
+    Convert a number to a group identifier.
+
+    Args:
+        number (int): The number to be converted.
+        group_count (int): The total number of groups.
+
+    Returns:
+        str: The group identifier corresponding to the number.
+
+    """
     hex_digits = '0123456789ABCDEF'
     remainder = number % group_count
     hex_digit = hex_digits[remainder]
     return hex_digit
 
 def fun_take(factor, number):
+    """
+    Extract the last `factor` digits from a number.
+
+    Args:
+        factor (int): The number of digits to take.
+        number (int): The original number.
+
+    Returns:
+        int: The last `factor` digits of the number.
+
+    """
     return int(str(number)[-factor:])
 
 def compute_group(number, process, group_count):
+    """
+    Compute the group assignment for a given number.
+
+    Args:
+        number (str): The input number.
+        process (list): A list of tuples representing the computation process.
+                        Each tuple contains a function name and a value.
+        group_count (int): The total number of groups.
+
+    Returns:
+        str: The group assignment for the number.
+
+    """
     function_dictionary = {
         "add": fun_add,
         "subtract": fun_subtract,
