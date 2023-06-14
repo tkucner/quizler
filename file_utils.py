@@ -29,6 +29,32 @@ def save_dict_to_file(dictionary, filename):
             for question in value:
                 file.write("{}\n".format(question))
 
+def save_dict_to_latex(dictionary, filename):
+ # Initialize an empty string to store the generated document.
+    doc = ''
+    doc += "\\documentclass{article}\n\\begin{document}\n"
+    # Loop through each key-value pair in the dictionary.
+    for section_title, table_data in dictionary.items():
+        # Add the section title to the document.
+        doc += f'\\section*{{{section_title}}}\n\n'
+
+        # Convert the table data into a LaTeX table.
+        table = '\\begin{tabular}{|c|p{0.9\linewidth}|c|}\n'
+        table+="\\hline\n"
+        
+        for i,row in enumerate(table_data):
+            table+=f"{i}&{row[0]}&{row[1]}\\\\\n\\hline\n"
+            
+        table += '\\end{tabular}\n\n'
+
+        # Add the table to the document.
+        doc += table
+    doc +='\\end{document}'
+    with open(filename, 'w') as file:
+        file.write(doc)
+
+
+
 def print_list_of_lists(list_of_lists):
     """
     Print the contents of a list of lists in a formatted manner.
@@ -56,6 +82,21 @@ def save_list_of_lists_to_file(list_of_lists, filename):
             file.write("++++++++++++++++SLIDE {}++++++++++++++++\n".format(i))
             for inner_item in inner_list:
                 file.write("{}\n".format(inner_item))
+
+def save_list_of_lists_to_latex(list_of_lists, filename):
+    
+    latex_code=""
+    for i,sublist in enumerate(list_of_lists):
+        latex_code += f"\\begin{{frame}}{{Question {i+1}}}\n"
+        latex_code += "\\begin{tabular}{ccp{0.9\linewidth}}\n"
+        for tup in sublist:
+            latex_code += f"{tup[0]} & {tup[1]} & {tup[2][0]} \\\\\n"
+            latex_code += "\\hline\n"
+        latex_code += "\\end{tabular}\n"
+        latex_code += "\\end{frame}\n"
+    with open (filename,'w') as file:
+        file.write(latex_code)
+    return None
 
 def create_directory(directory_path):
     """

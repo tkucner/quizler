@@ -1,7 +1,7 @@
 import sys
 import os
 import csv
-from file_utils import save_array_as_csv, save_dict_to_file, save_list_of_lists_to_file, create_directory
+from file_utils import save_array_as_csv, save_dict_to_file, save_list_of_lists_to_file, create_directory, save_list_of_lists_to_latex, save_dict_to_latex
 from quiz_utils import generate_quiz, answer_per_student, compute_group
 from validation_utils import find_schema, validate_json
 
@@ -33,9 +33,11 @@ def main(schema_file, json_file):
 
     # Save the questions grouped by IDs to a text file
     save_dict_to_file(groups_questions, os.path.join(json_data["name"], "questions_in_groups.txt"))
+    save_dict_to_latex(groups_questions, os.path.join(json_data["name"], "questions_in_groups.tex"))
 
     # Save the questions grouped by slides to a text file
     save_list_of_lists_to_file(questions_slides, os.path.join(json_data["name"], "questions_in_slides_raw.txt"))
+    save_list_of_lists_to_latex(questions_slides, os.path.join(json_data["name"], "questions_in_slides.tex"))
 
     # Assign answers to each student based on their group questions
     students_with_answers = answer_per_student(groups_questions, students)
