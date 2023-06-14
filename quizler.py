@@ -87,10 +87,20 @@ def generate_quiz(json_data):
             
     else:
         print("Somethign is wrong, too many columns")
-
-    
-
     return groups_questions, questions_slides
+
+def answer_per_student(group_questions,students):
+    for i in range(len(students)):
+        group=students[i][3]
+        questions_with_answers=group_questions[group]
+
+        for question in questions_with_answers:
+            print(len(question))
+            print(question)
+            for q in question:
+                print(q)
+            students[i].append(question[1])
+    return students
     
 
 
@@ -208,6 +218,9 @@ file_name = "questions_in_slides_raw.txt"
 file_path = os.path.join(json_data["name"], file_name)
 save_list_of_lists_to_file(questions_slides, file_path)
 
-
+students_with_answers=answer_per_student(groups_questions,students)
+file_name = "students with asnwers.csv"
+file_path = os.path.join(json_data["name"], file_name)
+save_array_as_csv(students_with_answers, file_path)
 
 
