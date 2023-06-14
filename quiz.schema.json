@@ -60,6 +60,11 @@
             "type": "boolean",
             "description": "Allow the questions to repat on multiple slides. DOES NOT REPEAT QUESTION IN A GROUP!",
             "default":false
+        },
+        "slide_template":{
+            "type": "string",
+            "description": "Template of the tex file used to generate the final presentation",
+            "default":"quiz_slides_template.tex"
         }
         
     },

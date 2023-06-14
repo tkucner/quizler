@@ -1,7 +1,7 @@
 import sys
 import os
 import csv
-from file_utils import save_array_as_csv, save_dict_to_file, save_list_of_lists_to_file, create_directory, save_list_of_lists_to_latex, save_dict_to_latex
+from file_utils import save_array_as_csv, save_dict_to_file, save_list_of_lists_to_file, create_directory, save_list_of_lists_to_latex, save_dict_to_latex, create_group_computation_slide,intialise_directory
 from quiz_utils import generate_quiz, answer_per_student, compute_group
 from validation_utils import find_schema, validate_json
 
@@ -15,6 +15,7 @@ def main(schema_file, json_file):
     """
     # Validate the JSON data using the provided schema file
     json_data = validate_json(json_file, schema_file)
+    print(json_data)
 
     # Read the students list from the CSV file
     students = read_students_list(json_data['students_list'])
@@ -24,6 +25,7 @@ def main(schema_file, json_file):
 
     # Create a directory for the quiz results
     create_directory(json_data["name"])
+    intialise_directory(json_data)
 
     # Save the student groups as a CSV file
     save_array_as_csv(students, os.path.join(json_data["name"], "student_groups.csv"))
@@ -44,6 +46,8 @@ def main(schema_file, json_file):
 
     # Save the students with their answers as a CSV file
     save_array_as_csv(students_with_answers, os.path.join(json_data["name"], "students_with_answers.csv"))
+
+    create_group_computation_slide(json_data,os.path.join(json_data["name"], "group_computation.tex"))
 
 def read_students_list(students_list_file):
     """

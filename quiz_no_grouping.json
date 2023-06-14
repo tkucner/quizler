@@ -11,5 +11,6 @@
         ["add",4]
     ],
     "questions_count":7,
-    "two_column":true
+    "two_column":true,
+    "slide_template":"quiz_slides_template.tex"
 }
