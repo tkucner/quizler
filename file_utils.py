@@ -266,7 +266,6 @@ def replace_latex_tag(in_file_path, out_file_path, replacement):
         in_file_path (str): The path of the LaTeX file to load.
         tag (str): The tag to replace.
         replacement (dict): The multiline LaTeX code to replace the tag with.
-        :param out_file_path:
 
     """
     # Load the contents of the LaTeX file

@@ -1,6 +1,7 @@
 import random
 import csv
 
+
 def generate_quiz(json_data):
     """
     Generate a quiz based on the provided JSON data.
@@ -16,11 +17,11 @@ def generate_quiz(json_data):
         IndexError: If the number of columns in the questions input is incorrect.
     """
     group_ids = list("0123456789ABCDEF"[:json_data["group_count"]])
-    
+
     questions_input = []
     questions_slides = []
     groups_questions = {item: [] for item in group_ids}
-    
+
     csv_file = open(json_data['questions_list'], 'r', encoding='utf-8-sig')
     csv_reader = csv.reader(csv_file, delimiter=";")
 
@@ -39,20 +40,25 @@ def generate_quiz(json_data):
                 local_questions_slides = []
                 local_group_ids = random.sample(group_ids, len(group_ids))
                 for group_id in range(1, len(group_ids), 2):
-                    while ((not groups_questions[local_group_ids[group_id]] == []) and (questions_input[question_i] in groups_questions[local_group_ids[group_id]])) or ((not groups_questions[local_group_ids[group_id-1]] == []) and (questions_input[question_i] in groups_questions[local_group_ids[group_id-1]])):
-                        item_to_move = questions_input.pop(questions_input[question_i])  
+                    while ((not groups_questions[local_group_ids[group_id]] == []) and (
+                            questions_input[question_i] in groups_questions[local_group_ids[group_id]])) or (
+                            (not groups_questions[local_group_ids[group_id - 1]] == []) and (
+                            questions_input[question_i] in groups_questions[local_group_ids[group_id - 1]])):
+                        item_to_move = questions_input.pop(questions_input[question_i])
                         questions_input.append(item_to_move)
                     groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
-                    groups_questions[local_group_ids[group_id-1]].append(questions_input[question_i])
-                    local_questions_slides.append((local_group_ids[group_id], local_group_ids[group_id-1], questions_input[question_i]))
+                    groups_questions[local_group_ids[group_id - 1]].append(questions_input[question_i])
+                    local_questions_slides.append(
+                        (local_group_ids[group_id], local_group_ids[group_id - 1], questions_input[question_i]))
                     question_i += 1
                 questions_slides.append(local_questions_slides)
         else:
             pass
-            
+
     else:
         raise IndexError("Something is wrong, too many columns")
     return groups_questions, questions_slides
+
 
 def answer_per_student(group_questions, students):
     """
@@ -73,6 +79,7 @@ def answer_per_student(group_questions, students):
             students[i].append(question[1])
     return students
 
+
 def remove_letters(input_string):
     """
     Remove letters from a string.
@@ -86,6 +93,7 @@ def remove_letters(input_string):
     """
     input_string = str(input_string)
     return ''.join(c for c in input_string if not c.isalpha())
+
 
 def fun_add(factor, number):
     """
@@ -101,6 +109,7 @@ def fun_add(factor, number):
     """
     return number + factor
 
+
 def fun_subtract(factor, number):
     """
     Subtract a factor from a number.
@@ -115,6 +124,7 @@ def fun_subtract(factor, number):
     """
     return number - factor
 
+
 def fun_multiply(factor, number):
     """
     Multiply a number by a factor.
@@ -128,6 +138,7 @@ def fun_multiply(factor, number):
 
     """
     return number * factor
+
 
 def fun_sum(_, number):
     """
@@ -146,6 +157,7 @@ def fun_sum(_, number):
         total += int(digit)
     return total
 
+
 def number_to_group(number, group_count):
     """
     Convert a number to a group identifier.
@@ -163,6 +175,7 @@ def number_to_group(number, group_count):
     hex_digit = hex_digits[remainder]
     return hex_digit
 
+
 def fun_take(factor, number):
     """
     Extract the last `factor` digits from a number.
@@ -176,6 +189,7 @@ def fun_take(factor, number):
 
     """
     return int(str(number)[-factor:])
+
 
 def compute_group(number, process, group_count):
     """
