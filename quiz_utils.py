@@ -63,7 +63,6 @@ def generate_quiz(json_data):
                         (local_group_ids[group_id], questions_input[question_i]))
                     question_i += 1
                 questions_slides.append(local_questions_slides)
-
     else:
         raise IndexError("Something is wrong, too many columns")
     return groups_questions, questions_slides
