@@ -92,9 +92,15 @@ def save_questions_to_latex(list_of_lists):
     latex_code = ""
     for i, sublist in enumerate(list_of_lists):
         latex_code += f"\\begin{{frame}}{{Question {i + 1}}}\n"
-        latex_code += "\\begin{tabular}{ccp{0.9\\linewidth}}\n"
+        if len(sublist[0]) == 2:
+            latex_code += "\\begin{tabular}{cp{0.9\\linewidth}}\n"
+        else:
+            latex_code += "\\begin{tabular}{ccp{0.9\\linewidth}}\n"
         for tup in sublist:
-            latex_code += f"{tup[0]} & {tup[1]} & {tup[2][0]} \\\\\n"
+            if len(tup) == 2:
+                latex_code += f"{tup[0]} & {tup[1][0]} \\\\\n"
+            else:
+                latex_code += f"{tup[0]} & {tup[1]} & {tup[2][0]} \\\\\n"
             latex_code += "\\hline\n"
         latex_code += "\\end{tabular}\n"
         latex_code += "\\end{frame}\n"
@@ -195,7 +201,7 @@ def create_group_computation_slide(json_data):
         "sum": sum_prompt,
         "take": take_prompt
     }
-    latex_code += "\\begin{frame}{Gropup compuation}\n"
+    latex_code += "\\begin{frame}{Group computation}\n"
     latex_code += "\\begin{columns}\n"
     latex_code += "\\begin{column}{0.5\\textwidth}\n"
     latex_code += "\\begin{enumerate}\n"

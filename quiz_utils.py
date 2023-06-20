@@ -53,7 +53,16 @@ def generate_quiz(json_data):
                     question_i += 1
                 questions_slides.append(local_questions_slides)
         else:
-            pass
+            question_i = 0
+            for no in range(json_data["questions_count"]):
+                local_questions_slides = []
+                local_group_ids = random.sample(group_ids, len(group_ids))
+                for group_id in range(1, len(group_ids)):
+                    groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
+                    local_questions_slides.append(
+                        (local_group_ids[group_id], questions_input[question_i]))
+                    question_i += 1
+                questions_slides.append(local_questions_slides)
 
     else:
         raise IndexError("Something is wrong, too many columns")

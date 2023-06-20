@@ -1,5 +1,5 @@
 {
-    "name":"quiz_no_grouping",
+    "name":"quiz_no_grouping_two_column",
     "students_list":"example_students.csv",
     "questions_list":"example_questions_no_grouping.csv",
     "group_count":16,
