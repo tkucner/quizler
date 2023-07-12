@@ -43,11 +43,11 @@ def save_answers_to_latex(dictionary, filename):
         doc += f'\\section*{{{section_title}}}\n\n'
 
         # Convert the table data into a LaTeX table.
-        table = '\\begin{tabular}{|c|p{0.9\\linewidth}|c|}\n'
+        table = '\\begin{tabular}{|c|c|p{0.9\\linewidth}|c|}\n'
         table += "\\hline\n"
 
         for i, row in enumerate(table_data):
-            table += f"{i}&{row[0]}&{row[1]}\\\\\n\\hline\n"
+            table += f"{i}&{row[0]}&{row[1]}&{row[2]}\\\\\n\\hline\n"
 
         table += '\\end{tabular}\n\n'
 
@@ -98,9 +98,9 @@ def save_questions_to_latex(list_of_lists):
             latex_code += "\\begin{tabular}{ccp{0.9\\linewidth}}\n"
         for tup in sublist:
             if len(tup) == 2:
-                latex_code += f"{tup[0]} & {tup[1][0]} \\\\\n"
+                latex_code += f"{tup[0]} & {tup[1][1]} \\\\\n"
             else:
-                latex_code += f"{tup[0]} & {tup[1]} & {tup[2][0]} \\\\\n"
+                latex_code += f"{tup[0]} & {tup[1]} & {tup[2][1]} \\\\\n"
             latex_code += "\\hline\n"
         latex_code += "\\end{tabular}\n"
         latex_code += "\\end{frame}\n"
@@ -280,7 +280,6 @@ def replace_latex_tag(in_file_path, out_file_path, replacement):
 
     # Replace the tag with the replacement code
     for key, item in replacement.items():
-        print(key, item)
         content = content.replace(key, item)
 
     # modified_content = content.replace(tag, replacement)

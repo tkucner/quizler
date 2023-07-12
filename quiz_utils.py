@@ -2,6 +2,12 @@ import random
 import csv
 
 
+def add_id_numbers(list_of_lists):
+    for i in range(len(list_of_lists)):
+        list_of_lists[i] = [i + 1] + list_of_lists[i]
+    return list_of_lists
+
+
 def generate_quiz(json_data):
     """
     Generate a quiz based on the provided JSON data.
@@ -24,47 +30,44 @@ def generate_quiz(json_data):
 
     csv_file = open(json_data['questions_list'], 'r', encoding='utf-8-sig')
     csv_reader = csv.reader(csv_file, delimiter=";")
-
-    # Read the contents of the CSV file into a list
     for row in csv_reader:
         questions_input.append(row)
-    random.shuffle(questions_input)
-
     # Check if there are groups of questions or not
-    if len(questions_input[0]) == 3:
-        pass
-    elif len(questions_input[0]) == 2:
-        if json_data["two_column"] and json_data["group_count"] % 2 == 0:
-            question_i = 0
-            for no in range(json_data["questions_count"]):
-                local_questions_slides = []
-                local_group_ids = random.sample(group_ids, len(group_ids))
-                for group_id in range(1, len(group_ids), 2):
-                    while ((not groups_questions[local_group_ids[group_id]] == []) and (
-                            questions_input[question_i] in groups_questions[local_group_ids[group_id]])) or (
-                            (not groups_questions[local_group_ids[group_id - 1]] == []) and (
-                            questions_input[question_i] in groups_questions[local_group_ids[group_id - 1]])):
-                        item_to_move = questions_input.pop(questions_input[question_i])
-                        questions_input.append(item_to_move)
-                    groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
-                    groups_questions[local_group_ids[group_id - 1]].append(questions_input[question_i])
-                    local_questions_slides.append(
-                        (local_group_ids[group_id], local_group_ids[group_id - 1], questions_input[question_i]))
-                    question_i += 1
-                questions_slides.append(local_questions_slides)
-        else:
-            question_i = 0
-            for no in range(json_data["questions_count"]):
-                local_questions_slides = []
-                local_group_ids = random.sample(group_ids, len(group_ids))
-                for group_id in range(1, len(group_ids)):
-                    groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
-                    local_questions_slides.append(
-                        (local_group_ids[group_id], questions_input[question_i]))
-                    question_i += 1
-                questions_slides.append(local_questions_slides)
+    if len(questions_input[0]) == 2:
+        questions_input = add_id_numbers(questions_input)
+    random.shuffle(questions_input)
+    if json_data["two_column"] and json_data["group_count"] % 2 == 0:
+        question_i = 0
+        for no in range(json_data["questions_count"]):
+            local_questions_slides = []
+            local_group_ids = random.sample(group_ids, len(group_ids))
+            for group_id in range(1, len(group_ids), 2):
+                while (not groups_questions[local_group_ids[group_id]] == [] and any(questions_input[question_i][0] is q_id for q_id in groups_questions[local_group_ids[group_id]][:][0])) or (not groups_questions[local_group_ids[group_id - 1]] == [] and any(questions_input[question_i][0] is q_id for q_id in groups_questions[local_group_ids[group_id-1]][:][0])):
+
+                    item_to_move = questions_input.pop(question_i)
+                    questions_input.append(item_to_move)
+                groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
+                groups_questions[local_group_ids[group_id - 1]].append(questions_input[question_i])
+                local_questions_slides.append(
+                    (local_group_ids[group_id], local_group_ids[group_id - 1], questions_input[question_i]))
+                question_i += 1
+            questions_slides.append(local_questions_slides)
     else:
-        raise IndexError("Something is wrong, too many columns")
+        question_i=0
+        for no in range(json_data["questions_count"]):
+            local_questions_slides = []
+            local_group_ids = random.sample(group_ids, len(group_ids))
+            for group_id in range(1, len(group_ids)):
+
+                while not groups_questions[local_group_ids[group_id]] == [] and any(questions_input[question_i][0] is q_id for q_id in groups_questions[local_group_ids[group_id]][:][0]):
+                    item_to_move = \
+                        questions_input.pop(question_i)
+                    questions_input.append(item_to_move)
+                groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
+                local_questions_slides.append((local_group_ids[group_id], questions_input[question_i]))
+                question_i += 1
+                questions_slides.append(local_questions_slides)
+
     return groups_questions, questions_slides
 
 
@@ -84,7 +87,7 @@ def answer_per_student(group_questions, students):
         group = students[i][3]
         questions_with_answers = group_questions[group]
         for question in questions_with_answers:
-            students[i].append(question[1])
+            students[i].append(question[2])
     return students
 
 

@@ -1,0 +1,16 @@
+{
+    "name":"quiz_no_grouping_single_column",
+    "students_list":"example_students.csv",
+    "questions_list":"example_questions_no_grouping.csv",
+    "group_count":8,
+    "group_computation":[
+        ["take",3],
+        ["add",9],
+        ["multiply", 3],
+        ["sum",0],
+        ["add",4]
+    ],
+    "questions_count":7,
+    "two_column":false,
+    "slide_template":"quiz_slides_template.tex"
+}
