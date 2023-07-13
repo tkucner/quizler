@@ -1,3 +1,4 @@
+![Quizler Logo](images/q_logo.png)
 # QUIZLER
 ![Python Package](https://github.com/tkucner/quizler/actions/workflows/python_package.yml/badge.svg)
 ## Introduction
