@@ -1,4 +1,5 @@
 # QUIZLER
+![Python Package](https://github.com/tkucner/quizler/actions/workflows/python_package.yml/badge.svg)
 ## Introduction
 
 This is a simple python script that allows to generate rapid, randomized in-class quizzes from a predefined set of questions. Quizlet allows:
