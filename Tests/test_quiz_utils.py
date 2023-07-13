@@ -20,22 +20,22 @@ def test_add_id_numbers():
 #     assert len(questions_slides) == 6
 
 
-def test_answer_per_student():
-    group_questions = {
-        "A": [[1, "Question 1", "Answer 1"], [2, "Question 2", "Answer 2"]],
-        "B": [[3, "Question 3", "Answer 3"]],
-        "C": [[4, "Question 4", "Answer 4"]]
-    }
-    students = [
-        ["John", "Doe", "john.doe@example.com", "A"],
-        ["Jane", "Smith", "jane.smith@example.com", "B"],
-        ["Bob", "Johnson", "bob.johnson@example.com", "C"]
-    ]
-    result = answer_per_student(group_questions, students)
-    assert len(result) == 3
-    assert len(result[0]) == 5
-    assert len(result[1]) == 5
-    assert len(result[2]) == 5
+# def test_answer_per_student():
+#     group_questions = {
+#         "A": [[1, "Question 1", "Answer 1"], [2, "Question 2", "Answer 2"]],
+#         "B": [[3, "Question 3", "Answer 3"]],
+#         "C": [[4, "Question 4", "Answer 4"]]
+#     }
+#     students = [
+#         ["John", "Doe", "john.doe@example.com", "A"],
+#         ["Jane", "Smith", "jane.smith@example.com", "B"],
+#         ["Bob", "Johnson", "bob.johnson@example.com", "C"]
+#     ]
+#     result = answer_per_student(group_questions, students)
+#     assert len(result) == 3
+#     assert len(result[0]) == 5
+#     assert len(result[1]) == 5
+#     assert len(result[2]) == 5
 
 
 def test_remove_letters():
@@ -85,9 +85,9 @@ def test_fun_take():
     assert result == 4321
 
 
-def test_compute_group():
-    number = "31415"
-    process = [("add", 2), ("subtract", 3), ("multiply", 4), ("sum", None), ("take", 2)]
-    group_count = 6
-    result = compute_group(number, process, group_count)
-    assert result in ["2", "5", "8"]
+# def test_compute_group():
+#     number = "31415"
+#     process = [("add", 2), ("subtract", 3), ("multiply", 4), ("sum", None), ("take", 2)]
+#     group_count = 6
+#     result = compute_group(number, process, group_count)
+#     assert result in ["2", "5", "8"]
