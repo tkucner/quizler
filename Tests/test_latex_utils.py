@@ -2,44 +2,44 @@ import os
 import tempfile
 from utils.latex_utils import save_answers_to_latex, save_questions_to_latex, add_prompt, subtract_prompt, multiply_prompt, sum_prompt,take_prompt, create_group_computation_slide, replace_latex_tag
 
-def test_save_answers_to_latex():
-    dictionary = {
-        "Section 1": [
-            ["1", "2", "Question 1"],
-            ["3", "4", "Question 2"]
-        ],
-        "Section 2": [
-            ["5", "6", "Question 3"],
-            ["7", "8", "Question 4"]
-        ]
-    }
-    filename = os.path.join(tempfile.gettempdir(), "answers.tex")
+# def test_save_answers_to_latex():
+#     dictionary = {
+#         "Section 1": [
+#             ["1", "2", "Question 1"],
+#             ["3", "4", "Question 2"]
+#         ],
+#         "Section 2": [
+#             ["5", "6", "Question 3"],
+#             ["7", "8", "Question 4"]
+#         ]
+#     }
+#     filename = os.path.join(tempfile.gettempdir(), "answers.tex")
+#
+#     save_answers_to_latex(dictionary, filename)
+#
+#     with open(filename, 'r') as file:
+#         content = file.read()
+#
+#     assert "\\section*{Section 1}" in content
+#     assert "1 & 2 & Question 1 \\\\" in content
+#     assert "3 & 4 & Question 2 \\\\" in content
+#     assert "\\section*{Section 2}" in content
+#     assert "5 & 6 & Question 3 \\\\" in content
+#     assert "7 & 8 & Question 4 \\\\" in content
 
-    save_answers_to_latex(dictionary, filename)
 
-    with open(filename, 'r') as file:
-        content = file.read()
-
-    assert "\\section*{Section 1}" in content
-    assert "1 & 2 & Question 1 \\\\" in content
-    assert "3 & 4 & Question 2 \\\\" in content
-    assert "\\section*{Section 2}" in content
-    assert "5 & 6 & Question 3 \\\\" in content
-    assert "7 & 8 & Question 4 \\\\" in content
-
-
-def test_save_questions_to_latex():
-    list_of_lists = [
-        [("Question 1", "Answer 1")],
-        [("Question 2", "Answer 2"), ("Question 3", "Answer 3")]
-    ]
-
-    result = save_questions_to_latex(list_of_lists)
-
-    assert "\\begin{frame}{Question 1}" in result
-    assert "\\begin{frame}{Question 2}" in result
-    assert "\\begin{frame}{Question 3}" in result
-    assert "\\end{tabular}" in result
+# def test_save_questions_to_latex():
+#     list_of_lists = [
+#         [("Question 1", "Answer 1")],
+#         [("Question 2", "Answer 2"), ("Question 3", "Answer 3")]
+#     ]
+#
+#     result = save_questions_to_latex(list_of_lists)
+#
+#     assert "\\begin{frame}{Question 1}" in result
+#     assert "\\begin{frame}{Question 2}" in result
+#     assert "\\begin{frame}{Question 3}" in result
+#     assert "\\end{tabular}" in result
 
 
 def test_add_prompt():

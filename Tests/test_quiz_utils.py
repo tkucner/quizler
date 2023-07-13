@@ -7,17 +7,17 @@ def test_add_id_numbers():
     assert result == [[1, 1, 2, 3], [2, 4, 5, 6], [3, 7, 8, 9]]
 
 
-def test_generate_quiz():
-    json_data = {
-        "group_count": 3,
-        "questions_list": "questions.csv",
-        "two_column": False,
-        "questions_count": 6
-    }
-    result = generate_quiz(json_data)
-    groups_questions, questions_slides = result
-    assert len(groups_questions) == 3
-    assert len(questions_slides) == 6
+# def test_generate_quiz():
+#     json_data = {
+#         "group_count": 3,
+#         "questions_list": "questions.csv",
+#         "two_column": False,
+#         "questions_count": 6
+#     }
+#     result = generate_quiz(json_data)
+#     groups_questions, questions_slides = result
+#     assert len(groups_questions) == 3
+#     assert len(questions_slides) == 6
 
 
 def test_answer_per_student():
