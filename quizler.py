@@ -1,11 +1,12 @@
 import sys
 import os
 import csv
-from file_utils import save_array_as_csv, save_dict_to_file, save_list_of_lists_to_file, create_directory, \
-    save_questions_to_latex, save_answers_to_latex, create_group_computation_slide, initialise_directory, \
+from utils.file_utils import save_array_as_csv, save_raw_answers_to_file, save_raw_questions_to_file, create_directory, \
+    initialise_directory
+from utils.latex_utils import save_answers_to_latex, save_questions_to_latex, create_group_computation_slide, \
     replace_latex_tag
-from quiz_utils import generate_quiz, answer_per_student, compute_group
-from validation_utils import find_schema, validate_json
+from utils.quiz_utils import generate_quiz, answer_per_student, compute_group
+from utils.validation_utils import find_schema, validate_json
 
 
 def main(schema_file, json_file):
@@ -36,11 +37,11 @@ def main(schema_file, json_file):
     groups_questions, questions_slides = generate_quiz(json_data)
 
     # Save the questions grouped by IDs to a text file
-    save_dict_to_file(groups_questions, os.path.join(json_data["name"], "questions_in_groups.txt"))
+    save_raw_answers_to_file(groups_questions, os.path.join(json_data["name"], "questions_in_groups.txt"))
     save_answers_to_latex(groups_questions, os.path.join(json_data["name"], "questions_in_groups.tex"))
 
     # Save the questions grouped by slides to a text file
-    save_list_of_lists_to_file(questions_slides, os.path.join(json_data["name"], "questions_in_slides_raw.txt"))
+    save_raw_questions_to_file(questions_slides, os.path.join(json_data["name"], "questions_in_slides_raw.txt"))
     questions_slides = save_questions_to_latex(questions_slides)
 
     # Assign answers to each student based on their group questions

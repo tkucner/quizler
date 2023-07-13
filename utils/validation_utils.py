@@ -2,6 +2,7 @@ import jsonschema
 import json
 import os
 
+
 def find_schema(extension="schema.json"):
     """
     Find the schema file with the specified extension in the current directory and its subdirectories.
@@ -12,12 +13,13 @@ def find_schema(extension="schema.json"):
     Returns:
         str: The path to the schema file, or None if not found.
     """
-    for root, dirs, files in os.walk('.'):
+    for root, dirs, files in os.walk('..'):
         for file in files:
             if file.endswith(extension):
                 file_path = os.path.join(root, file)
                 return file_path
     return None
+
 
 def validate_json(json_file, schema_file):
     """

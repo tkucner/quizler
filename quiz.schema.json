@@ -9,11 +9,6 @@
             "type": "string",
             "description": "Title of your quiz. Good idea is to include date."
         },
-        "question_grouping": {
-            "type": "boolean",
-            "description": "The questions grouped in exclusive sets",
-            "default": false
-        },
         "students_list": {
             "type": "string",
             "description": "File with students."

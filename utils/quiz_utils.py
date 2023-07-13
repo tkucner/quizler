@@ -3,6 +3,24 @@ import csv
 
 
 def add_id_numbers(list_of_lists):
+    """
+    Adds ID numbers to each sublist in a list of lists.
+
+    Each sublist is modified by adding an ID number at the beginning,
+    where the ID number corresponds to the index of the sublist plus one.
+
+    Args:
+        list_of_lists (list): A list of lists.
+
+    Returns:
+        list: The modified list of lists with ID numbers added.
+
+    Example:
+        >>> matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        >>> result = add_id_numbers(matrix)
+        >>> print(result)
+        [[1, 1, 2, 3], [2, 4, 5, 6], [3, 7, 8, 9]]
+    """
     for i in range(len(list_of_lists)):
         list_of_lists[i] = [i + 1] + list_of_lists[i]
     return list_of_lists
@@ -42,8 +60,12 @@ def generate_quiz(json_data):
             local_questions_slides = []
             local_group_ids = random.sample(group_ids, len(group_ids))
             for group_id in range(1, len(group_ids), 2):
-                while (not groups_questions[local_group_ids[group_id]] == [] and any(questions_input[question_i][0] is q_id for q_id in groups_questions[local_group_ids[group_id]][:][0])) or (not groups_questions[local_group_ids[group_id - 1]] == [] and any(questions_input[question_i][0] is q_id for q_id in groups_questions[local_group_ids[group_id-1]][:][0])):
-
+                while (not groups_questions[local_group_ids[group_id]] == [] and any(
+                        questions_input[question_i][0] is q_id for q_id in
+                        groups_questions[local_group_ids[group_id]][:][0])) or (
+                        not groups_questions[local_group_ids[group_id - 1]] == [] and any(
+                        questions_input[question_i][0] is q_id for q_id in
+                        groups_questions[local_group_ids[group_id - 1]][:][0])):
                     item_to_move = questions_input.pop(question_i)
                     questions_input.append(item_to_move)
                 groups_questions[local_group_ids[group_id]].append(questions_input[question_i])
@@ -53,13 +75,15 @@ def generate_quiz(json_data):
                 question_i += 1
             questions_slides.append(local_questions_slides)
     else:
-        question_i=0
+        question_i = 0
         for no in range(json_data["questions_count"]):
             local_questions_slides = []
             local_group_ids = random.sample(group_ids, len(group_ids))
             for group_id in range(1, len(group_ids)):
 
-                while not groups_questions[local_group_ids[group_id]] == [] and any(questions_input[question_i][0] is q_id for q_id in groups_questions[local_group_ids[group_id]][:][0]):
+                while not groups_questions[local_group_ids[group_id]] == [] and any(
+                        questions_input[question_i][0] is q_id for q_id in
+                        groups_questions[local_group_ids[group_id]][:][0]):
                     item_to_move = \
                         questions_input.pop(question_i)
                     questions_input.append(item_to_move)

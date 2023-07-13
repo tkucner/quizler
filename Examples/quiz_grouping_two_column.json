@@ -1,7 +1,7 @@
 {
     "name":"quiz_grouping_two_column",
-    "students_list":"example_students.csv",
-    "questions_list":"example_questions_grouping_short.csv",
+    "students_list":"Examples/example_students.csv",
+    "questions_list":"Examples/example_questions_grouping_short.csv",
     "group_count":16,
     "group_computation":[
         ["take",3],
