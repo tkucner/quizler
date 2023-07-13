@@ -1,7 +1,7 @@
 import os
 import csv
 import shutil
-from utils.file_utils import save_raw_answers_to_file, save_raw_questions_to_file, create_directory, initialise_directory
+from utils.file_utils import save_raw_answers_to_file, save_raw_questions_to_file, create_directory, initialise_directory, save_array_as_csv
 
 
 def test_save_raw_answers_to_file(tmp_path):
